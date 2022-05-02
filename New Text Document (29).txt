@@ -1,0 +1,20 @@
+byte[] encrypt(Transaction transaction) {
+   byte[] plaintext = transaction.toString();
+   byte[] newplaintext = new byte[plaintext.length + plaintext.length/2];
+   for(int k = 0; k < plaintext.length; k++) {
+       newplaintext[k] = plaintext[k];
+   }
+  
+   for(int k =  plaintext.length; k < plaintext.length/2; k+=2) {
+       int position1 = Math.Random() * plaintext.length;
+       int position2 = Math.Random() * plaintext.length;
+       byte b = newplaintext[position1];
+       newplaintext[position1] = newplaintext[position2];
+       newplaintext[position2] = b;
+       newplaintext[k] = (byte)position1;
+       newplaintext[k+1] = (byte)position2;
+   }
+ 
+   byte[] ciphertext = EncryptionRSA.encrypt(newplaintext);
+   return ciphertext;
+}
